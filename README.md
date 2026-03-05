@@ -1,84 +1,130 @@
 # WDS — Widget Designer Script для Zed
 
-Поддержка языка Widget Designer Script (.wds) для редактора Zed.
+Подсветка синтаксиса и языковая поддержка **Widget Designer Script (.wds)** для редактора [Zed](https://zed.dev).
+
+Widget Designer Script — скриптовый язык, используемый в Widget Designer для создания интерактивных панелей управления, автоматизации оборудования (проекторы, аудиосистемы, свет через TCP/UDP) и построения кастомных интерфейсов управления шоу.
+
+## Возможности
+
+- **Подсветка синтаксиса** — ключевые слова, строки, числа, комментарии, функции, операторы, переменные
+- **Сворачивание кода** — блоки `If`/`ElseIf`/`Else`, `Switch`/`Case`
+- **Автозакрытие** — скобки `{}`, `()`, `[]` и кавычки `""`
+- **Автоотступы** — автоматические отступы внутри блоков
+
+### Поддерживаемый синтаксис
+
+| Элемент | Примеры |
+|---|---|
+| Переменные | `var name = value` |
+| Условия | `If` / `ElseIf` / `Else` |
+| Переключатель | `Switch` / `Case` / `Case Else` |
+| Возврат | `return result` |
+| Функции | `TcpStart(id)`, `WDWait(0.5)` |
+| Методы | `obj.Method`, `list.Copy`, `str.Trim` |
+| Массивы | `list[0]`, `parts[1]` |
+| Математика | `Math.floor(x)`, `Math.Mod(x, y)` |
+| Строки | `"hello"`, `"HH:MM"` |
+| Комментарии | `// однострочный комментарий` |
+| Операторы | `+` `-` `*` `/` `<` `>` `=` `==` `!=` `&&` `||` |
+
+## Установка
+
+### Вариант А — Dev Extension (рекомендуется)
+
+1. **Склонируй репозиторий:**
+
+   ```bash
+   git clone https://github.com/auslinx73/zed-wds-extension.git
+   ```
+
+2. **Открой Zed** и нажми `Ctrl+Shift+P` (или `Cmd+Shift+P` на macOS)
+
+3. **Набери** `install dev extension` и выбери эту команду
+
+4. **Укажи папку** `zed-wds-extension`, которую только что склонировал
+
+5. **Готово!** Открой любой `.wds` файл — Zed автоматически определит его как Widget Designer Script
+
+### Вариант Б — Ручная установка
+
+1. **Склонируй репозиторий** в папку расширений Zed:
+
+   **Windows:**
+   ```bash
+   git clone https://github.com/auslinx73/zed-wds-extension.git "%LOCALAPPDATA%\Zed\extensions\installed\wds"
+   ```
+
+   **Linux:**
+   ```bash
+   git clone https://github.com/auslinx73/zed-wds-extension.git ~/.local/share/zed/extensions/installed/wds
+   ```
+
+   **macOS:**
+   ```bash
+   git clone https://github.com/auslinx73/zed-wds-extension.git ~/Library/Application\ Support/Zed/extensions/installed/wds
+   ```
+
+2. **Перезапусти Zed**
+
+## Обновление
+
+Чтобы обновить до последней версии:
+
+```bash
+cd путь/к/zed-wds-extension
+git pull
+```
+
+Затем в Zed: `Ctrl+Shift+P` → `extensions` → найди «Widget Designer Script» → нажми **Rebuild**.
 
 ## Структура проекта
 
 ```
-tree-sitter-wds/          ← Грамматика Tree-sitter (отдельный репо)
-├── grammar.js             ← Описание грамматики
-├── package.json
-├── queries/
-│   └── highlights.scm     ← Подсветка синтаксиса
-└── test/corpus/
-    └── basic.txt          ← Тесты
-
-zed-wds-extension/         ← Расширение для Zed
-├── extension.toml         ← Манифест расширения
-└── languages/wds/
-    ├── config.toml        ← Конфигурация языка
-    ├── highlights.scm     ← Подсветка синтаксиса
-    ├── indents.scm        ← Автоотступы
-    └── brackets.scm       ← Парные скобки
+zed-wds-extension/
+├── extension.toml              # Манифест расширения
+└── languages/
+    └── wds/
+        ├── config.toml         # Конфигурация языка
+        ├── highlights.scm      # Правила подсветки синтаксиса
+        ├── indents.scm         # Правила автоотступов
+        └── brackets.scm        # Парные скобки
 ```
 
-## Установка
+Грамматика Tree-sitter хранится отдельно:
+[auslinx73/tree-sitter-wds](https://github.com/auslinx73/tree-sitter-wds)
 
-### Шаг 1: Опубликовать грамматику Tree-sitter
+## Пример кода
 
-```bash
-cd tree-sitter-wds
-npm install
-npx tree-sitter generate
-npx tree-sitter test
+```wds
+// Проверка питания проектора
+TcpStart(pj_tcp_id)
+WDWait(0.5)
+TcpSend(pj_tcp_id, "%1POWR ?[CR]")
 
-# Создать репо на GitHub
-git init
-git add .
-git commit -m "Initial tree-sitter-wds grammar"
-git remote add origin https://github.com/YOUR_USERNAME/tree-sitter-wds.git
-git push -u origin main
+var response = OptomaTcpResponce.Trim
+
+Switch response {
+    Case "OK1"
+        power_status = "on"
+    Case "OK0"
+        power_status = "off"
+    Case Else
+        power_status = "??"
+}
+
+If power_status == "on" {
+    WDCustomScriptLabelColor(1, 0, 255, 0)
+} ElseIf power_status == "off" {
+    WDCustomScriptLabelColor(1, 255, 0, 0)
+} Else {
+    WDCustomScriptLabelColor(1, 125, 125, 125)
+}
 ```
 
-### Шаг 2: Обновить extension.toml
+## Участие в разработке
 
-В файле `zed-wds-extension/extension.toml` заполнить:
-- `repository` — URL твоего репо tree-sitter-wds
-- `commit` — хеш коммита после пуша
+Нашёл конструкцию WDS, которая парсится неправильно? Открой issue с примером кода — добавим в грамматику.
 
-### Шаг 3: Установить расширение в Zed
+## Лицензия
 
-**Вариант A — локальная разработка:**
-```bash
-# Скопировать в папку расширений Zed
-# Windows:
-xcopy /E zed-wds-extension %APPDATA%\Zed\extensions\installed\wds\
-
-# Linux/macOS:
-cp -r zed-wds-extension ~/.config/zed/extensions/installed/wds/
-```
-
-**Вариант B — опубликовать:**
-```bash
-cd zed-wds-extension
-git init
-git add .
-git commit -m "WDS extension for Zed"
-git push  # на GitHub
-# Затем подать PR в https://github.com/zed-industries/extensions
-```
-
-## Поддерживаемый синтаксис
-
-- ✅ Комментарии: `// ...`
-- ✅ Переменные: `var name = value`
-- ✅ If / Else / ElseIf
-- ✅ Switch / Case / Case Else
-- ✅ return
-- ✅ Вызовы функций: `Func(args)`
-- ✅ Методы: `obj.Method`, `obj.Property`
-- ✅ Массивы: `list[index]`
-- ✅ Строки, числа, boolean
-- ✅ Операторы: `+ - * / < > <= >= == != && ||`
-- ✅ Подсветка встроенных WD/Tcp/Udp функций
-- ✅ Подсветка Math как built-in типа
+MIT
