@@ -1,6 +1,6 @@
 # WDS — Widget Designer Script для Zed
 
-Поддержка языка Isadora Widget Designer Script (.wds) для редактора Zed.
+Поддержка языка Widget Designer Script (.wds) для редактора Zed.
 
 ## Структура проекта
 
@@ -72,7 +72,7 @@ git push  # на GitHub
 
 - ✅ Комментарии: `// ...`
 - ✅ Переменные: `var name = value`
-- ✅ If / Else
+- ✅ If / Else / ElseIf
 - ✅ Switch / Case / Case Else
 - ✅ return
 - ✅ Вызовы функций: `Func(args)`
