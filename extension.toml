@@ -1,0 +1,11 @@
+id = "wds"
+name = "Widget Designer Script"
+version = "0.1.0"
+schema_version = 1
+description = "Widget Designer Script (.wds) language support"
+repository = "https://github.com/auslinx73/zed-wds-extension"
+authors = ["Andrey"]
+
+[grammars.wds]
+repository = "https://github.com/auslinx73/tree-sitter-wds"
+commit = "e81c76a28a36bea0708fb24e3e38f57e73b74e49"
