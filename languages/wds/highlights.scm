@@ -1,44 +1,11 @@
-(comment) @comment
-
-(string) @string
-(number) @number
-(boolean) @constant.builtin
-
-(variable_declaration
-  name: (identifier) @variable)
-
-(lvalue
-  (identifier) @variable)
-
-(subscript_expression
-  object: (identifier) @variable)
-
-(member_expression
-  object: (identifier) @variable
-  property: (identifier) @property)
-
-(function_call
-  function: (identifier) @function)
-
-(function_call
-  function: (identifier) @function.builtin
-  (#match? @function.builtin "^(WD|Tcp|Udp|Osc|ArtNet|Serial|Http|Json|Xml|File|Timer|Math)[A-Za-z0-9_]*$"))
-
-(function_call
-  function: (member_expression
-    object: (identifier) @variable
-    property: (identifier) @function.method))
-
-((identifier) @constant.builtin
-  (#match? @constant.builtin "^(CR|LF|CRLF|NULL|null)$"))
-
+; Keywords
 [
   "var" "Var" "VAR"
 ] @keyword
 
 [
   "if" "If" "IF"
-  "elseif" "Elseif" "ElseIf" "ELSEIF"
+  "elseif" "ElseIf" "Elseif" "ELSEIF"
   "else" "Else" "ELSE"
   "switch" "Switch" "SWITCH"
   "case" "Case" "CASE"
@@ -47,52 +14,76 @@
 [
   "for" "For" "FOR"
   "foreach" "Foreach" "ForEach" "FOREACH"
-  "while" "While" "WHILE"
-  "in" "In" "IN"
   "to" "To" "TO"
+  "in" "In" "IN"
   "step" "Step" "STEP"
 ] @keyword.control.repeat
 
 [
   "return" "Return" "RETURN"
   "break" "Break" "BREAK"
-  "continue" "Continue" "CONTINUE"
   "exit" "Exit" "EXIT"
 ] @keyword.return
 
-[
-  "true" "True" "TRUE"
-  "false" "False" "FALSE"
-] @constant.builtin.boolean
+; Literals
+(boolean) @constant.builtin.boolean
+(number) @number
+(string) @string
 
+; Comments
+(comment) @comment
+
+; Operators
 [
-  "+"
-  "-"
-  "*"
-  "/"
-  "="
-  "=="
-  "!="
-  "<"
-  "<="
-  ">"
-  ">="
-  "&&"
-  "||"
-  "!"
-  "+="
-  "-="
-  "*="
-  "/="
+  "=" "==" "!="
+  ">" "<" ">=" "<="
+  "+" "-" "*" "/"
+  "+=" "-=" "*=" "/="
+  "&&" "||" "^" "!"
+  "and" "or"
 ] @operator
 
+; Variables
+(variable_declaration
+  name: (identifier) @variable)
+
+(assignment_statement
+  left: (lvalue
+    (identifier) @variable))
+
+(subscript_expression
+  object: (identifier) @variable)
+
+(member_expression
+  object: (identifier) @variable)
+
+; Properties
+(member_expression
+  property: (identifier) @property)
+
+; Built-in calls
+((function_call
+  function: (identifier) @function.builtin)
+  (#match? @function.builtin "^(WD|Tcp|Udp|Osc|ArtNet|Serial|Http|Json|Xml|File|Timer|Math)[A-Za-z0-9_]*$"))
+
+; Normal function calls
+(function_call
+  function: (identifier) @function)
+
+; Method calls
+(function_call
+  function: (member_expression
+    property: (identifier) @function.method))
+
+; Punctuation
 [
-  "."
-  ","
-] @punctuation.delimiter
+  "(" ")" "[" "]"
+] @punctuation.bracket
 
 [
-  "(" ")"
-  "[" "]"
   "{" "}"
-] @punctuation.bracket
+] @punctuation.special
+
+[
+  "," "."
+] @punctuation.delimiter
