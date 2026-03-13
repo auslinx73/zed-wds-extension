@@ -1,4 +1,5 @@
 # WDS — Widget Designer Script for Zed
+# test
 
 Syntax highlighting and language support for **Widget Designer Script (`.wds`)** in [Zed](https://zed.dev).
 
