@@ -1,6 +1,8 @@
 # WDS — Widget Designer Script for Zed
 
 
+
+
 Syntax highlighting and language support for **Widget Designer Script (`.wds`)** in [Zed](https://zed.dev).
 
 Widget Designer Script is used in **Widget Designer** to build interactive control panels, automate devices over TCP/UDP, and create custom control interfaces for AV and show-control workflows.
@@ -35,7 +37,33 @@ Widget Designer Script is used in **Widget Designer** to build interactive contr
 | Comments | `// comment` |
 | Operators | `+` `-` `*` `/` `<` `>` `=` `==` `!=` `&&` `||` |
 
-## Installation
+# Installation
+
+## Quick start from scratch (Windows)
+
+This repository contains the **Zed extension** for Widget Designer Script.
+
+The **Tree-sitter grammar source** lives in a separate repository:
+
+`https://github.com/auslinx73/tree-sitter-wds`
+
+Zed loads that grammar automatically from the `repository` and `rev` fields in `extension.toml`.
+That means:
+
+- to **use** the extension, you only need to clone **this** repository
+- to **develop the grammar**, you should also clone `tree-sitter-wds`
+
+Zed can install a local development extension through **Install Dev Extension**, and the grammar is resolved from the pinned repository/revision declared in the extension manifest.
+
+### Option A — Install and use the extension
+
+#### 1. Create a folder for your repositories
+
+Example:
+
+```powershell
+mkdir E:\GitHub
+cd E:\GitHub
 
 ### Option A — Dev Extension
 
