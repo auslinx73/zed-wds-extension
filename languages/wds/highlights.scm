@@ -1,169 +1,98 @@
-; Keywords
-[
-  "var"
-] @keyword
-
-[
-  "if"
-  "If"
-  "IF"
-] @keyword
-
-[
-  "elseif"
-  "ElseIf"
-  "Elseif"
-  "ELSEIF"
-] @keyword
-
-[
-  "else"
-  "Else"
-  "ELSE"
-] @keyword
-
-[
-  "switch"
-  "Switch"
-  "SWITCH"
-] @keyword
-
-[
-  "case"
-  "Case"
-  "CASE"
-] @keyword
-
-[
-  "for"
-  "For"
-  "FOR"
-] @keyword
-
-[
-  "foreach"
-  "Foreach"
-  "ForEach"
-  "FOREACH"
-] @keyword
-
-[
-  "return"
-  "Return"
-  "RETURN"
-] @keyword
-
-[
-  "break"
-  "Break"
-  "BREAK"
-] @keyword
-
-[
-  "exit"
-  "Exit"
-  "EXIT"
-] @keyword
-
-[
-  "to"
-  "To"
-  "TO"
-] @keyword
-
-[
-  "in"
-  "In"
-  "IN"
-] @keyword
-
-[
-  "step"
-  "Step"
-  "STEP"
-] @keyword
-
-; Literals
-(boolean) @constant
-(number) @number
-(string) @string
-(string_content) @string
-(string_content_single) @string
-
-; Comments
 (comment) @comment
 
-; Operators
-"=" @operator
-"==" @operator
-"!=" @operator
-">" @operator
-"<" @operator
-">=" @operator
-"<=" @operator
-"+" @operator
-"-" @operator
-"*" @operator
-"/" @operator
-"+=" @operator
-"-=" @operator
-"*=" @operator
-"/=" @operator
-"&&" @operator
-"||" @operator
-"^" @operator
-"!" @operator
-"and" @operator
-"or" @operator
+(string) @string
+(number) @number
+(boolean) @constant.builtin
 
-; Variables
 (variable_declaration
   name: (identifier) @variable)
 
-(assignment_statement
-  left: (lvalue
-    (identifier) @variable))
-
-(member_expression
-  object: (identifier) @variable)
+(lvalue
+  (identifier) @variable)
 
 (subscript_expression
   object: (identifier) @variable)
 
-(identifier) @variable
-
-; Properties and methods
 (member_expression
+  object: (identifier) @variable
   property: (identifier) @property)
 
 (function_call
-  function: (member_expression
-    property: (identifier) @function.method))
-
-; Function calls
-(function_call
   function: (identifier) @function)
 
-; Built-in WD/TCP/UDP functions
-((function_call
-  function: (identifier) @function.builtin)
-  (#match? @function.builtin "^(WD|Tcp|Udp)"))
+(function_call
+  function: (identifier) @function.builtin
+  (#match? @function.builtin "^(WD|Tcp|Udp|Osc|ArtNet|Serial|Http|Json|Xml|File|Timer|Math)[A-Za-z0-9_]*$"))
 
-; Punctuation
-"(" @punctuation.bracket
-")" @punctuation.bracket
-"[" @punctuation.bracket
-"]" @punctuation.bracket
+(function_call
+  function: (member_expression
+    object: (identifier) @variable
+    property: (identifier) @function.method))
 
-"{" @punctuation.special
-"}" @punctuation.special
+((identifier) @constant.builtin
+  (#match? @constant.builtin "^(CR|LF|CRLF|NULL|null)$"))
 
-"," @punctuation.delimiter
-"." @punctuation.delimiter
-; Fallback keyword highlighting when parser treats keywords as identifiers
-((identifier) @keyword
-  (#match? @keyword "^(var|Var|VAR|if|If|IF|elseif|ElseIf|Elseif|ELSEIF|else|Else|ELSE|switch|Switch|SWITCH|case|Case|CASE|for|For|FOR|foreach|Foreach|ForEach|FOREACH|return|Return|RETURN|break|Break|BREAK|exit|Exit|EXIT|to|To|TO|in|In|IN|step|Step|STEP)$"))
+[
+  "var" "Var" "VAR"
+] @keyword
 
-; Fallback built-in function highlighting
-((identifier) @function.builtin
-  (#match? @function.builtin "^(WD|Tcp|Udp)[A-Za-z0-9_]*$"))
+[
+  "if" "If" "IF"
+  "elseif" "Elseif" "ElseIf" "ELSEIF"
+  "else" "Else" "ELSE"
+  "switch" "Switch" "SWITCH"
+  "case" "Case" "CASE"
+] @keyword.control.conditional
+
+[
+  "for" "For" "FOR"
+  "foreach" "Foreach" "ForEach" "FOREACH"
+  "while" "While" "WHILE"
+  "in" "In" "IN"
+  "to" "To" "TO"
+  "step" "Step" "STEP"
+] @keyword.control.repeat
+
+[
+  "return" "Return" "RETURN"
+  "break" "Break" "BREAK"
+  "continue" "Continue" "CONTINUE"
+  "exit" "Exit" "EXIT"
+] @keyword.return
+
+[
+  "true" "True" "TRUE"
+  "false" "False" "FALSE"
+] @constant.builtin.boolean
+
+[
+  "+"
+  "-"
+  "*"
+  "/"
+  "="
+  "=="
+  "!="
+  "<"
+  "<="
+  ">"
+  ">="
+  "&&"
+  "||"
+  "!"
+  "+="
+  "-="
+  "*="
+  "/="
+] @operator
+
+[
+  "."
+  ","
+] @punctuation.delimiter
+
+[
+  "(" ")"
+  "[" "]"
+  "{" "}"
+] @punctuation.bracket
