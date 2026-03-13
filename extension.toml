@@ -8,8 +8,4 @@ authors = ["Andrey"]
 
 [grammars.wds]
 repository = "https://github.com/auslinx73/tree-sitter-wds"
-commit = "b8a7e290c7b976be0a38fc8350eede09d40e0880 commit = "b8a7e290c7b976be0a38fc8350eede09d40e0880 commit = """"
-
-
-
-
+rev = "021fab9bc0be981e36b3c23f9fa755e09b5c7707"
