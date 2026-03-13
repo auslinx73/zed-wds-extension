@@ -5,7 +5,7 @@ Syntax highlighting and language support for **Widget Designer Script (`.wds`)**
 
 Widget Designer Script is used in **Widget Designer** to build interactive control panels, automate devices over TCP/UDP, and create custom control interfaces for AV and show-control workflows.
 
-## Features
+## Features_
 
 - Syntax highlighting for:
   - keywords
