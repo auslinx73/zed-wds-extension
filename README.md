@@ -59,7 +59,7 @@ Zed can install a local development extension through **Install Dev Extension**,
 
 #### 1. Create a folder for your repositories
 
-Example:
+Example: Disk D
 
 ```powershell
 D:
