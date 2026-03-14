@@ -101,6 +101,41 @@ git clone https://github.com/auslinx73/zed-wds-extension.git ~/.local/share/zed/
 ```
 
 **macOS**
+# WDS для Zed — Быстрая установка на macOS
+
+## 1. Склонируй расширение
+
+Открой Terminal и выполни:
+
+```bash
+mkdir -p ~/GitHub
+cd ~/GitHub
+git clone https://github.com/auslinx73/zed-wds-extension.git
+```
+
+## 2. Установи в Zed
+
+1. Открой **Zed**
+2. Нажми `Cmd+Shift+P`
+3. Набери `install dev extension`
+4. Укажи папку `~/GitHub/zed-wds-extension`
+5. Готово!
+
+## 3. Проверка
+
+Открой любой `.wds` файл — подсветка должна работать.
+
+
+
+## 4. Обновление
+
+```bash
+cd ~/GitHub/zed-wds-extension
+git pull
+```
+
+В Zed: `Cmd+Shift+P` → `reload extensions`
+
 ```bash
 git clone https://github.com/auslinx73/zed-wds-extension.git ~/Library/Application\ Support/Zed/extensions/installed/wds
 ```
