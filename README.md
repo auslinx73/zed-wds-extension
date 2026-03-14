@@ -62,10 +62,11 @@ Zed can install a local development extension through **Install Dev Extension**,
 Example:
 
 ```powershell
-mkdir E:\GitHub
-cd E:\GitHub
-git clone https://github.com/auslinx73/zed-wds-extension.gitkdir E:\GitHub
-cd E:\GitHub
+D:
+cd \
+mkdir GitHub
+cd GitHub
+git clone https://github.com/auslinx73/zed-wds-extension.git
 ```
 
 
