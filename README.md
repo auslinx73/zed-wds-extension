@@ -64,14 +64,12 @@ Example:
 ```powershell
 mkdir E:\GitHub
 cd E:\GitHub
-
-### Option A — Dev Extension
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/auslinx73/zed-wds-extension.git
+git clone https://github.com/auslinx73/zed-wds-extension.gitkdir E:\GitHub
+cd E:\GitHub
 ```
+
+
+
 
 2. Open Zed
 
