@@ -257,7 +257,4 @@ MIT
 
 
 
-- аккуратно расширить подсветку built-in функций `WD...`, `Tcp...`, `Udp...`
-- добавить ещё тестов в `test/corpus/basic.txt`
-- убрать warning про `unnecessary conflicts` в grammar
-- потом уже заняться более умной подсветкой `Case Else`, `Math.*`, data-type methods
+
